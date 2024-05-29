@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.spring_todo.mappers.TaskMapper">
+    <!-- 結果と結果を受け取るクラスの紐づけ -->
+    <resultMap id="TaskMap" type="com.example.spring_todo.domains.Task">
+      <result property="id" column="id" />
+      <result property="state" column="state" />
+      <result property="title" column="title" />
+      <result property="deadline" column="deadline" />
+    </resultMap>
+    <!-- SQL -->
+    <select id="all" resultMap="TaskMap">
+        SELECT * FROM tasks
+    </select>
+    <insert id="add" parameterType="com.example.spring_todo.domains.Task">
+    	INSERT INTO tasks (title, deadline) VALUES(#{title}, #{deadline})
+    </insert>
+    <update id="change" parameterType="com.example.spring_todo.domains.Task">
+    	UPDATE tasks SET state = 2 WHERE id = #{id}
+    </update>
+</mapper>

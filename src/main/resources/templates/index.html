@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>ToDo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/app.css" />
+</head>
+<body>
+  <header class="mb-5">
+    <nav class="navbar navbar-light bg-light">
+      <a href="/" class="navbar-brand">ToDo</a>
+    </nav>
+  </header>
+  <main>
+    <div class="todo-container">
+
+        <h1 class="h3 mb-4">タスク一覧</h1>
+
+        <table class="table table-bordered mb-3">
+			
+          <thead>
+            <tr>
+              <th>状態</th>
+              <th>タスク</th>
+              <th>期限</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+			<!-- 状態が1の時は未完了でOKボタンを表示、2は完了でOKボタンを非表示にする -->
+			<tr th:each="task : ${tasks}">
+				<td class="text-center">
+					<div th:switch="${task.state}">
+					    <span class="badge badge-pill badge-light" th:case="1" th:text="'未完了'"></span>
+					    <span class="badge badge-pill badge-success" th:case="2" th:text="'完了'"></span>
+					</div>
+				</td>
+	            <td th:text="${task.title}"></td>
+	            <td th:text="${task.deadline}" class="text-center"></td>
+				<td class="text-center">
+	                <form action="/change-state" method="post">
+						<div th:switch="${task.state}">
+						    <button th:case="1" class="btn btn-sm btn-primary" name="task_id" type="submit" th:value="${task.id}">OK</button>
+						    <span th:case="2">-</span>
+						</div>
+	                </form>
+	              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="text-right">
+			<form action="/addtask" method="get">
+				<button class="btn btn-sm btn-primary" type="submit">追加する</button>
+			</form>
+        </div>
+
+      </div>
+  </main>
+</body>
+</html>
